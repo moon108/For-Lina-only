@@ -229,6 +229,9 @@
         </div>
     </div>
     
+    <!-- Audio element -->
+    <audio id="kiss-audio" src="canigettkiss.mp3"></audio>
+
     <script>
         const mainButton = document.getElementById('main-button');
         const modal = document.getElementById('modal');
@@ -237,11 +240,13 @@
         const thankYou = document.getElementById('thank-you');
         const playPlato = document.getElementById('play-plato');
         const roseContainer = document.getElementById('rose-container');
+        const audio = document.getElementById('kiss-audio');
         
-        // Opening the modal
+        // Opening the modal and immediately playing audio
         mainButton.addEventListener('click', () => {
             modal.classList.add('active');
             mainButton.style.display = 'none';
+            audio.play(); // Play audio immediately
         });
         
         // Yes button action
