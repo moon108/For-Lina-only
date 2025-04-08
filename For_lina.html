@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Lina</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for rose icon -->
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #e8eaf6 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .romantic-text {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .main-button {
+            background: linear-gradient(135deg, #f8bbd0 0%, #d1c4e9 100%);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 1.8rem;
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            color: #5a2a52;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+        
+        .main-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(5px);
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 80%;
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .choice-btn {
+            background: linear-gradient(135deg, #f8bbd0 0%, #d1c4e9 100%);
+            border: none;
+            padding: 10px 30px;
+            border-radius: 50px;
+            margin: 10px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #5a2a52;
+        }
+        
+        .choice-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        #thank-you {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            color: #5a2a52;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.7);
+        }
+
+        #play-plato {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            color: #5a2a52;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.7);
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        .heart {
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+            transform-origin: center;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #5a2a52;
+        }
+        
+        .final-messages {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        /* Rose petals animation */
+        .petal {
+            position: absolute;
+            color: #e91e63;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: fall linear forwards;
+            z-index: 1;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-10%) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.4;
+            }
+        }
+        
+        .rose-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <div class="rose-container" id="rose-container"></div>
+    
+    <div class="container mx-auto px-4 text-center">
+        <button id="main-button" class="main-button romantic-text">
+            for the girl who has the most beautiful eyes in the world (at least for me)
+        </button>
+        
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <h2 class="mb-8 romantic-text">Can I get a kiss?</h2>
+                <div>
+                    <button id="yes-btn" class="choice-btn">Yes</button>
+                    <button id="no-btn" class="choice-btn">No</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="final-messages">
+            <div id="thank-you" class="font-bold romantic-text floating">
+                Thank you <span class="heart">❤️</span>
+            </div>
+            <div id="play-plato" class="font-bold romantic-text floating">
+                تلعبين بلاتو؟
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const mainButton = document.getElementById('main-button');
+        const modal = document.getElementById('modal');
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const thankYou = document.getElementById('thank-you');
+        const playPlato = document.getElementById('play-plato');
+        const roseContainer = document.getElementById('rose-container');
+        
+        // Opening the modal
+        mainButton.addEventListener('click', () => {
+            modal.classList.add('active');
+            mainButton.style.display = 'none';
+        });
+        
+        // Yes button action
+        yesBtn.addEventListener('click', () => {
+            showFinalScreen();
+        });
+        
+        // No button action - it will change text to "Yes ofc (غصبا عليج)"
+        noBtn.addEventListener('click', () => {
+            noBtn.textContent = 'Yes ofc (غصبا عليج)';
+            setTimeout(() => {
+                showFinalScreen();
+            }, 1000);
+        });
+        
+        function showFinalScreen() {
+            modal.classList.remove('active');
+            thankYou.style.opacity = '1';
+            playPlato.style.opacity = '1';
+            createRosePetals();
+        }
+        
+        // Create rose petals animation
+        function createRosePetals() {
+            // Clear any existing petals
+            roseContainer.innerHTML = '';
+            
+            // Create new petals
+            const petalCount = 60;
+            const petalTypes = ['🌹', '🌸', '❀', '❁', '✿'];
+            
+            for (let i = 0; i < petalCount; i++) {
+                const petalType = petalTypes[Math.floor(Math.random() * petalTypes.length)];
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.textContent = petalType;
+                
+                const size = Math.random() * 20 + 10;
+                const startPosition = Math.random() * 100;
+                const fallDuration = Math.random() * 10 + 5;
+                const fallDelay = Math.random() * 5;
+                const horizontalMovement = (Math.random() - 0.5) * 20;
+                
+                petal.style.fontSize = `${size}px`;
+                petal.style.left = `${startPosition}%`;
+                petal.style.animationDuration = `${fallDuration}s`;
+                petal.style.animationDelay = `${fallDelay}s`;
+                petal.style.setProperty('--horizontal', `${horizontalMovement}vw`);
+                
+                roseContainer.appendChild(petal);
+            }
+        }
+        
+        // For mobile compatibility
+        if ('ontouchstart' in window) {
+            mainButton.addEventListener('touchstart', function(e) {
+                this.click();
+            });
+            
+            yesBtn.addEventListener('touchstart', function(e) {
+                this.click();
+            });
+            
+            noBtn.addEventListener('touchstart', function(e) {
+                this.click();
+            });
+        }
+    </script>
+</body>
+</html>
